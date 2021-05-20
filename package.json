@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "connect": "",
+    "serve-static": ""
+  }
+}
