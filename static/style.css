@@ -1,49 +1,38 @@
-body {
-  background-color: #fff;
-  color: #000;
-  font-family: "Helvetica Neue", sans-serif;
-  padding: 20px;
-  box-sizing: border-box;
-  font-size: 12px;
-}
-
-h1 {
-  font-weight: 200;
-  letter-spacing: 0.1em;
-  font-size: 14px;
-}
-
-#FileBrowser {
-  border: 1px solid #f0f0f0;
-  padding: 10px;
-}
-/* my code */
-#hierarchy {
-  font-family: FontAwesome;
-  width: 300px;
-}
-.foldercontainer,
-.file,
-.noitems {
-  display: block;
-  padding: 5px 5px 5px 50px;
+ul,
+#myUL {
   list-style-type: none;
 }
 
-.folder,
-.file {
-  cursor: pointer;
+#myUL {
+  margin: 0;
+  padding: 0;
 }
-.noitems {
+
+.caret {
+  cursor: pointer;
+  -webkit-user-select: none; /* Safari 3.1+ */
+  -moz-user-select: none; /* Firefox 2+ */
+  -ms-user-select: none; /* IE 10+ */
+  user-select: none;
+}
+
+.caret::before {
+  content: "\25B6";
+  color: black;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.caret-down::before {
+  -ms-transform: rotate(90deg); /* IE 9 */
+  -webkit-transform: rotate(90deg); /* Safari */
+  transform: rotate(90deg);
+}
+
+.nested {
   display: none;
-  pointer-events: none;
 }
-.far:hover,
-.file:hover {
-  background: rgb(218, 218, 216);
-  cursor: pointer;
-}
-.far:before,
-.file:before {
-  padding-right: 10px;
+
+.active {
+  display: block;
 }
