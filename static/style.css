@@ -1,14 +1,27 @@
-ul,
-#myUL {
+body {
+  background-color: #fff;
+  color: #000;
+  font-family: "Helvetica Neue", sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
+  font-size: 12px;
+}
+
+h1 {
+  font-weight: 200;
+  letter-spacing: 0.1em;
+  font-size: 14px;
+}
+
+#FileBrowser {
+  border: 1px solid #f0f0f0;
+  padding: 10px;
+}
+ul {
   list-style-type: none;
 }
 
-#myUL {
-  margin: 0;
-  padding: 0;
-}
-
-.caret {
+.folder {
   cursor: pointer;
   -webkit-user-select: none; /* Safari 3.1+ */
   -moz-user-select: none; /* Firefox 2+ */
@@ -16,23 +29,23 @@ ul,
   user-select: none;
 }
 
-.caret::before {
+.folder::before {
   content: "\25B6";
   color: black;
   display: inline-block;
   margin-right: 6px;
 }
 
-.caret-down::before {
+.folder-down::before {
   -ms-transform: rotate(90deg); /* IE 9 */
   -webkit-transform: rotate(90deg); /* Safari */
   transform: rotate(90deg);
 }
 
-.nested {
+.file {
   display: none;
 }
 
-.active {
+.expanded {
   display: block;
 }

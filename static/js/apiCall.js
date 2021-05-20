@@ -1,5 +1,5 @@
 export function fetchApi() {
-  fetch("./filesystem.json")
+  fetch("../filesystem.json")
     .then(function (response) {
       if (response.status !== 200) {
         console.log(
@@ -11,6 +11,7 @@ export function fetchApi() {
       // Examine the text in the response
       response.json().then(function (data) {
         console.log(data);
+        return data;
       });
     })
     .catch(function (err) {
