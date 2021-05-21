@@ -13,7 +13,8 @@ h1 {
   font-size: 14px;
 }
 
-#FileBrowser {
+#FileBrowser,
+#filebrowser1 {
   border: 1px solid #f0f0f0;
   padding: 10px;
 }
@@ -42,7 +43,7 @@ ul {
   transform: rotate(90deg);
 }
 
-.file {
+.files {
   display: none;
 }
 
