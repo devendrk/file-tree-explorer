@@ -1,20 +1,10 @@
-export function fetchApi() {
-  fetch("../filesystem.json")
-    .then(function (response) {
-      if (response.status !== 200) {
-        console.log(
-          "Looks like there was a problem. Status Code: " + response.status
-        );
-        return;
-      }
+export const fetchFilesytem = async () => {
+  const response = await fetch("../filesystem.json");
 
-      // Examine the text in the response
-      response.json().then(function (data) {
-        console.log(data);
-        return data;
-      });
-    })
-    .catch(function (err) {
-      console.log("Fetch Error :-S", err);
-    });
-}
+  if (response.status === 200) {
+    const data = await response.json();
+    return data;
+  } else {
+    throw new Error("Unable to fetch data");
+  }
+};
