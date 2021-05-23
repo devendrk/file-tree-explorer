@@ -1,3 +1,7 @@
+/**
+ *
+ * @returns Json object
+ */
 export const fetchFilesytem = async () => {
   const response = await fetch("../filesystem.json");
 

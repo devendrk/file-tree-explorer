@@ -1,94 +1,99 @@
 import { fetchFilesytem } from "./apiCall.js";
+import { isSameDay, renderFieModifiedStatus } from "./utils.js";
 
 window.onload = async () => {
   try {
+    let loader = `<div class="loader"></div>`;
+    document.getElementById("fileBrowser1").innerHTML = loader;
     let data = await fetchFilesytem();
-    const filterChildren = await data.children.filter((d, index) => index < 3);
-    const newData = { ...data, children: filterChildren };
-    console.log("new data", newData);
-    const tree = renderFileTree(newData);
+    // const filterChildren = await data.children.filter((d, index) => index < 3);
+    // const newData = { ...data, children: filterChildren };
+    console.log("new data", data);
+    const tree = renderFileTreeComponent(data);
 
     document.getElementById("fileBrowser1").innerHTML = tree;
-
-    generateDirectoryList();
+    directoriesTreeToggler();
   } catch (error) {
     console.log("Fetch Error :-S", error);
   }
 };
 
-function generateDirectoryList() {
-  var toggler = document.getElementsByClassName("folder");
-  for (let i = 0; i < toggler.length; i++) {
-    toggler[i].addEventListener("click", function () {
+/**
+ *  Adds click eventlistener to folders-caret element
+ * adds toggle switch on click
+ */
+const directoriesTreeToggler = () => {
+  const folders = document.getElementsByClassName("folders-caret");
+
+  for (let i = 0; i < folders.length; i++) {
+    folders[i].addEventListener("click", function () {
       this.parentElement.querySelector(".files").classList.toggle("expanded");
 
-      this.classList.toggle("folder-down");
+      this.classList.toggle("folders-caret-down");
     });
   }
-}
+};
 
-// recursive array
-function renderFileTree(data) {
+/**
+ *
+ * @param {object} data
+ * @returns
+ */
+
+const renderFileTreeComponent = (data) => {
   if (data.children === null || data.children === undefined) {
     return;
   } else if (data.path === "/") {
-    const modifiedDateTime = new Date(data.mtime);
-    const isModifiedToday = isSameDay(modifiedDateTime);
+    // renders root folders-caret and children directories
     return `<li class="row">
-    <p>${data.path}</p>
-    <p class = "row-date">${
-      isModifiedToday
-        ? modifiedDateTime.toLocaleTimeString("en-GB")
-        : modifiedDateTime.toLocaleDateString()
-    }</p>
+    <p>${data.path} <span>(${data.children.length} items)</span></p>
+    <p class = "row-date">
+    ${renderFieModifiedStatus(data.mtime, isSameDay)}
+    </p>
     </li>
-    ${DirectoryComponent(data)}`;
+    ${directoryComponent(data)}`;
   } else {
-    return DirectoryComponent(data);
+    // renders only children directories
+    return directoryComponent(data);
   }
-}
+};
 
-function DirectoryComponent(data) {
-  return data.children
-    .map((sub) => {
-      const modifiedDateTime = new Date(sub.mtime);
-      const isModifiedToday = isSameDay(modifiedDateTime);
-      return sub.children
-        ? `<li>
-              <div class ="container folder">
+/**
+ *
+ * @param {object} data
+ * @returns string  // HTML elements strings
+ */
+const directoryComponent = (data) => {
+  return (
+    data &&
+    data.children
+      .map((sub) => {
+        return !sub
+          ? ``
+          : sub.children
+          ? `<li>
+              <div class ="container folders-caret">
               <div class ="row">
                 <p>
-                  ${sub.name === "" ? "empty folder" : sub.name}
-                    <span>${sub.children.length}</span>
+                  ${sub.name}
+                    <span>(${sub.children.length} items)</span>
                 </p>
-                <p class ="row-date">${
-                  isModifiedToday
-                    ? modifiedDateTime.toLocaleTimeString("en-GB")()
-                    : modifiedDateTime.toLocaleDateString()
-                }</p>
+                <p class ="row-date">
+                  ${renderFieModifiedStatus(sub.mtime, isSameDay)}
+                </p>
               </div>
             </div>
             <ul class ="files">
-              ${renderFileTree(sub)}
+              ${renderFileTreeComponent(sub)}
             </ul>
           </li>`
-        : `<li class="row">
+          : `<li class="row">
         <p>${sub.name}</p>
-        <p cass ="row-date">${
-          isModifiedToday
-            ? modifiedDateTime.toLocaleTimeString("en-GB")()
-            : modifiedDateTime.toLocaleDateString()
-        }</p>
+        <p class ="row-date">
+        ${renderFieModifiedStatus(sub.mtime, isSameDay)}
+        </p>
         </li>`;
-    })
-    .join(" ");
-}
-
-const isSameDay = (modifiedDate) => {
-  const today = new Date();
-  return (
-    today.getFullYear() === modifiedDate.getFullYear() &&
-    today.getMonth() === modifiedDate.getMonth() &&
-    today.getDate() === modifiedDate.getDate()
+      })
+      .join(" ")
   );
 };
