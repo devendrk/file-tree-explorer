@@ -4,14 +4,11 @@ import { isSameDay, renderFieModifiedStatus } from "./utils.js";
 window.onload = async () => {
   try {
     let loader = `<div class="loader"></div>`;
-    document.getElementById("fileBrowser1").innerHTML = loader;
+    document.getElementById("fileBrowser").innerHTML = loader;
     let data = await fetchFilesytem();
-    // const filterChildren = await data.children.filter((d, index) => index < 3);
-    // const newData = { ...data, children: filterChildren };
-    console.log("new data", data);
     const tree = renderFileTreeComponent(data);
 
-    document.getElementById("fileBrowser1").innerHTML = tree;
+    document.getElementById("fileBrowser").innerHTML = tree;
     directoriesTreeToggler();
   } catch (error) {
     console.log("Fetch Error :-S", error);
@@ -39,7 +36,6 @@ const directoriesTreeToggler = () => {
  * @param {object} data
  * @returns
  */
-
 const renderFileTreeComponent = (data) => {
   if (data.children === null || data.children === undefined) {
     return;

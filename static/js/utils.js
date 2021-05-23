@@ -2,7 +2,9 @@
  *
  * @param {date} mtime
  * @param {function} cb  // callbacak function isSameDay()
- * @returns Date or Time // if < 24 hrs returns last modifiedTime  else returns modified Date
+ * @returns Date or Time
+ * Description: if < 24 hrs returns last modifiedTime  else returns modified Date
+ *              TRY changing one of the directory's( ex root directory) date to todays date in filesystem.jsonto see the effect.
  */
 export const renderFieModifiedStatus = (mtime, cb) => {
   const modifiedDateTime = new Date(mtime);
